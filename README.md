@@ -5,13 +5,23 @@ A simple Node.js + Express backend that analyzes basic SEO elements of any given
 
 Live Demo
 API URL: https://seo-project-nhur.onrender.com
+## Features
 
-Features
+### Frontend
+- Clean UI built with React/Vanilla JS
+- Enter any website URL to start analysis
+- Displays detailed SEO report with scores
+- Shows actionable suggestions for improvement
+- Responsive design, works on mobile + desktop
+- Deployed on Render with backend
+
+### Backend API
 - REST API built with Node.js and Express
 - Fetches HTML of any URL using Axios
 - Parses SEO elements using Cheerio
 - Returns structured JSON response
 - Deployed on Render for free hosting
+
 
  Setup Locally
 
