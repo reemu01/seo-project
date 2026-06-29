@@ -13,11 +13,31 @@ app.get("/", (req, res) => {
 app.post("/api/analyze", async (req, res) => {
   try {
     const { url } = req.body;
+    const https = url.startsWith("https://");
     console.log("New code is running", url);
     const response = await axios.get(url);
+    let robotsTxt = false;
+let sitemapXml = false;
+
+try {
+  await axios.get(url + "/robots.txt");
+  robotsTxt = true;
+} catch (e) {}
+
+try {
+  await axios.get(url + "/sitemap.xml");
+  sitemapXml = true;
+} catch (e) {}
     const $ = cheerio.load(response.data);
 
     const title = $("title").text();
+    const canonical =
+  $('link[rel="canonical"]').attr("href") || "Not Found";
+  const ogTitle =
+  $('meta[property="og:title"]').attr("content") || "Not Found";
+
+const ogDescription =
+  $('meta[property="og:description"]').attr("content") || "Not Found";
    const metaDescription =
   $('meta[name="description"]').attr("content") || "Meta description not found";
     const h1 = [];
@@ -89,6 +109,12 @@ if (internalLinks === 0) {
       externalLinks,
       seoScore,
       suggestions,
+      robotsTxt,
+      sitemapXml,
+      https,
+      canonical,
+      ogTitle,
+      ogDescription,
     });
   } catch (error) {
     res.status(500).json({
